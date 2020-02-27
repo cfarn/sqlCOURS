@@ -20,3 +20,14 @@ SELECT nom, prenom FROM t_utilisateurs
 SELECT * FROM t_utilisateurs WHERE ville='Bourges' 
 
 DELETE FROM t_utilisataurs WHERE nom='Chirac'
+
+CREATE TABLE IF NOT EXISTS employes (
+id_employes int(3) NOT NULL AUTO_INCREMENT,
+prenom varchar(20) DEFAULT NULL,
+nom varchar(20) DEFAULT NULL,
+sexe enum('m','f') NOT NULL,
+service varchar(30) DEFAULT NULL,
+date_embauche date DEFAULT NULL,
+salaire float DEFAULT NULL,
+PRIMARY KEY (id_employes)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;

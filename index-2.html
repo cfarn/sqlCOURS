@@ -86,7 +86,7 @@
             <!-- Main jumbotron for a primary marketing message or call to action -->
             <div class="jumbotron">
                 <div class="container">
-                    <h1 class="display-3 text-primary mx-auto">Sql cours - accueil</h1>
+                    <h1 class="display-3 text-primary">Sql cours - accueil</h1>
                     <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
                 </div>
             </div>
@@ -99,9 +99,6 @@
                         <ul>
                             <li>MySQL peut s'utiliser en ligne de commande (Bash ou Cmder) ou avec une interface graphique (php MyAdmin)</li>
                             <li>Pour se connecter à MySQL en ligne de commande, on utilise <code>mysql -u utilisateur -p</code></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
                         </ul>
                         <p><a class="btn btn-secondary" href="https://openclassrooms.com/fr/courses/1959476-administrez-vos-bases-de-donnees-avec-mysql/1959969-installez-mysql" role="button" target="_blank">+ sur la ligne de commande</a></p>
                     </div>
@@ -158,13 +155,91 @@
                         <h2>Types de données</h2>
                     </div>
                 </div> <!-- /row -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2>Les types de données</h2>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Type de champ</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Contexte</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">VARCHAR</th>
+                                    <td>Chaine (jusqu'à 256 caractères)</td>
+                                    <td>Pour enregistrer un pseudo, un email, le titre d'un produit ou d'un article de blog</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">TEXT</th>
+                                    <td>Chaine de caractères (illimités)</td>
+                                    <td>Pour un contenu textuel long, un article de blog</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">INT</th>
+                                    <td>Numérique</td>
+                                    <td>Pour un identifiant, un prix, un code, un cp, le nombre de produits en stock, etc.</td>            
+                                </tr>
+                                <tr>
+                                    <th scope="row">DATE</th>
+                                    <td>Date</td>
+                                    <td>Pour la date d'un enregistrement (une inscription), d'une commande, etc.</td>            
+                                </tr>
+                                <tr>
+                                    <th scope="row">ENUM</th>
+                                    <td>Liste</td>
+                                    <td>Pour proposer une liste de termes, ex. "Madame", "Monsieur"</td>            
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> <!-- /row -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Les identifiants (clé primaire - PK primary key)</h2>
+                        <p>Les identifiants sont des champs (colonnes) un peu particuliers car ils ne décrivent pas le sujet (ce n'est pas une des caractéristiques du sujet) mais ce sont des colonnes (champs) systématiquement présent dans chaque table et ce en première position.</p>
+                        <p>Chaque table possède une colonne (champ) identifiant. Nous appellerons cela une clé primaire (PK). Par exemple, nous pourrons l'appeler "id" (ou encore "idProduit" ou "id_produit") pour la table produit, et "idMembre" pour la table membre.</p>
+                        <p>Il s'agit d'une liste numérotée permettant de différencier chaque enregistrement de manière unique. Le produit "tshirt rouge" deviendra (par exemple) le produit n°396 "tshirt rouge". Pour éviter de choisir le numéro et faire des erreurs nous demanderons à le générer automatiquement avec l'Auto_Increment.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Auto-Increment</h2>
+                        <p>Auto_Increment est une option permettant de générer un numéro unique dans une colonne (champ) de type clé primaire (identifiant).
+                        Par conséquent, retenez bien que le 1er champ de chaque table sera systématiquement un "id" qui sera PK (Primary Key) et AI (Auto_Increment).</p>
+                    </div>
+                </div> <!-- /row -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>NULL / NOT NULL</h2>
+                        <p>Dans chaque champ nous pourrons indiquer si nous acceptons les valeurs NULL ou non (NOT NULL).</p>
+                        <p>NULL est un type de valeur en informatique évitant de laisser un champ vide si nous n'avons pas d'infos à y déposer.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Les relations</h2>
+                        <p>Il arrive parfois que les sujets intéragissent entre eux</p>
+                        <p>Exemple : 1 membre commande 1 produit (ou 1 produit est commandé par 1 membre), nous devrons enregistrer l'information dans 1 table commande.</p>
+                        <p>Autre exemple : 1 conducteur conduit 1 véhicule (ou 1 véhicule est conduit par 1 conducteur). il nous faudra une table permettant de préciser quel conducteur va avec quel véhicule.</p>
+                    </div>
+                </div> <!-- /row -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Les cardinalités</h2>
+                        <p>Exemple : 1 livre possède forcément 1 auteur et qu'1 seul. Relation (1,1). Minimum 1 auteur, Maximum 1 auteur.</p>
+                        <p>1 auteur peut avoir écrit plusieurs livre (ou aucun). Relation (0,n). Minimum 0 livre, Maximum N livres</p>
+                        <p>Dans cet exemple, une table auteurs et une table livres suffisent : nous n'avons pas besoin de table de jointure.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2></h2>
+                    </div>
+                </div> <!-- /row -->
     
             </div> <!-- /container -->
     
         </main>
     
-        <footer class="container">
-            <p>&copy; Company 2017-2019</p>
+        <footer class="container bg-secondary text-white">
+            <p>&copy; Cfarn</p>
         </footer>
 
     <!-- Optional JavaScript -->
