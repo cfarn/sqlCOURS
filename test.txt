@@ -83,3 +83,84 @@ SELECT prenom, salaire FROM employes WHERE salaire = (SELECT MIN(salaire) FROM e
 
 SELECT nom, prenom, service FROM employes WHERE service IN('comptabilité', 'informatique')
 SELECT nom, prenom, service FROM employes WHERE service='commercial' AND salaire<=2000
+
+UPDATE employes SET salaire = salaire+100
+
+//////////// Bibliotheque///////////////
+
+CREATE DATABASE IF NOT EXISTS bibliotheque ;
+USE bibliotheque ;
+CREATE TABLE abonne (
+id_abonne INT(3) NOT NULL AUTO_INCREMENT,
+prenom VARCHAR(20) NOT NULL,
+PRIMARY KEY (id_abonne)
+) ENGINE=InnoDB ;
+CREATE TABLE emprunt (
+id_emprunt INT(3) NOT NULL AUTO_INCREMENT,
+id_livre INT(3) DEFAULT NULL,
+id_abonne INT(3) DEFAULT NULL,
+date_sortie DATE NOT NULL,
+date_rendu DATE DEFAULT NULL,
+PRIMARY KEY (id_emprunt)
+) ENGINE=InnoDB ;
+CREATE TABLE livre (
+id_livre INT(3) NOT NULL AUTO_INCREMENT,
+auteur VARCHAR(30) NOT NULL,
+titre VARCHAR(30) NOT NULL,
+PRIMARY KEY (id_livre)
+) ENGINE=InnoDB ;
+
+/////////// Création clefs étrangères///////
+
+ALTER TABLE emprunt ADD FOREIGN KEY ( id_livre ) REFERENCES bibliotheque.livre (id_livre);
+ALTER TABLE emprunt ADD FOREIGN KEY ( id_abonne ) REFERENCES bibliotheque.abonne (id_abonne);
+
+INSERT INTO abonne (id_abonne, prenom) VALUES
+(1, 'Guillaume'),
+(2, 'Benoit'),
+(3, 'Chloe'),
+(4, 'Laura');
+
+INSERT INTO livre (id_livre, auteur, titre) VALUES
+(100, 'GUY DE MAUPASSANT', 'Une vie'),
+(101, 'GUY DE MAUPASSANT', 'Bel-Ami '),
+(102, 'HONORE DE BALZAC', 'Le père Goriot'),
+(103, 'ALPHONSE DAUDET', 'Le Petit chose'),
+(104, 'ALEXANDRE DUMAS', 'La Reine Margot'),
+(105, 'ALEXANDRE DUMAS', 'Les Trois Mousquetaires');
+
+INSERT INTO emprunt (id_emprunt, id_livre, id_abonne, date_sortie, date_rendu) VALUES
+(1, 100, 1, '2014-12-17', '2014-12-18'),
+(2, 101, 2, '2014-12-18', '2014-12-20'),
+(3, 100, 3, '2014-12-19', '2014-12-22'),
+(4, 103, 4, '2014-12-19', '2014-12-22'),
+(5, 104, 1, '2014-12-19', '2014-12-28'),
+(6, 105, 2, '2015-03-20', '2015-03-26'),
+(7, 105, 3, '2015-06-13', NULL),
+(8, 100, 2, '2015-06-15', NULL);
+
+SELECT * FROM emprunt WHERE date_rendu IS NULL
+SELECT id_livre FROM emprunt WHERE date_rendu IS NULL
+
+SELECT titre FROM livre WHERE id_livre IN(SELECT id_livre FROM emprunt WHERE date_rendu IS NULL) => pour afficher livres non rendus
+
+SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne = 3)
+
+Quels sont les titres des livres n'ayant pas été rendus à la bibliothèque ?
+1/ SELECT id_livre FROM emprunt WHERE date_rendu IS NULL
+2/ SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE date_rendu IS NULL)
+Nous aimerions connaitre le n° (id) de(s) livre(s) que Chloé a emprunté à la bibliothèque
+1/ SELECT id_livre FROM emprunt WHERE id_abonne = 3
+2/ SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne = 3)
+
+afficher les prénoms des abonnés ayant emprunté un livre le 19/12/2014
+SELECT prenom FROM abonne WHERE id_abonne IN (SELECT id_abonne FROM emprunt WHERE date_sortie = '2014-12-19')
+
+ATTENTION le mot-clef IN permet de sortir (au contraire de =) plusieurs résultats
+
+afficher la liste des abonnés ayant déjà emprunté un livre d'alphonse daudet :
+SELECT prenom FROM abonne WHERE id_abonne IN (SELECT id_abonne FROM emprunt WHERE id_livre IN (SELECT id_livre FROM livre WHERE auteur = 'Alphonse Daudet'))
+
+afficher les titres de livres que Chloé a emprunté à la bibliothèque : 
+SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne IN (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'))
+SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne = (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'))

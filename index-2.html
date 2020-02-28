@@ -150,6 +150,7 @@
                             <li>Afficher et trier une table : <code>SELECT * FROM t_utilisateurs ORDER BY nom ASC</code>, <code>SELECT nom, prenom FROM t_utilisateurs</code></li>
                             <li>Effacer un enregistrement : <code>DELETE FROM t_utilisataurs WHERE nom='Chirac'</code></li>
                             <li>Observer la structure d'une table <code>DESC t_utilisateurs</code></li>
+                            <li>Renommer la BDD : à faire dans PHP MyAdmin > Onglet opération ; la requête efface la BDD et en crée une nouvelle avec le nouveau nom.</li>
                         </ul>
                         <p><a class="btn btn-secondary" href="#suite" role="button">Autres requêtes</a></p>
                     </div>
@@ -200,7 +201,7 @@
                 </div> <!-- /row -->
                 <div class="row">
                     <div class="col-md-6">
-                        <h2>Les identifiants (clé primaire - PK primary key)</h2>
+                        <h2>Les identifiants <br> (clé primaire - PK primary key)</h2>
                         <p>Les identifiants sont des champs (colonnes) un peu particuliers car ils ne décrivent pas le sujet (ce n'est pas une des caractéristiques du sujet) mais ce sont des colonnes (champs) systématiquement présent dans chaque table et ce en première position.</p>
                         <p>Chaque table possède une colonne (champ) identifiant. Nous appellerons cela une clé primaire (PK). Par exemple, nous pourrons l'appeler "id" (ou encore "idProduit" ou "id_produit") pour la table produit, et "idMembre" pour la table membre.</p>
                         <p>Il s'agit d'une liste numérotée permettant de différencier chaque enregistrement de manière unique. Le produit "tshirt rouge" deviendra (par exemple) le produit n°396 "tshirt rouge". Pour éviter de choisir le numéro et faire des erreurs nous demanderons à le générer automatiquement avec l'Auto_Increment.</p>
