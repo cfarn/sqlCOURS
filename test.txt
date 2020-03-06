@@ -115,6 +115,8 @@ PRIMARY KEY (id_livre)
 ALTER TABLE emprunt ADD FOREIGN KEY ( id_livre ) REFERENCES bibliotheque.livre (id_livre);
 ALTER TABLE emprunt ADD FOREIGN KEY ( id_abonne ) REFERENCES bibliotheque.abonne (id_abonne);
 
+/////////// Insertions dans la base bibliothèque///////
+
 INSERT INTO abonne (id_abonne, prenom) VALUES
 (1, 'Guillaume'),
 (2, 'Benoit'),
@@ -139,6 +141,9 @@ INSERT INTO emprunt (id_emprunt, id_livre, id_abonne, date_sortie, date_rendu) V
 (7, 105, 3, '2015-06-13', NULL),
 (8, 100, 2, '2015-06-15', NULL);
 
+INSERT INTO livre (id_livre, auteur, titre) VALUES
+(NULL, 'François-Jean Willemain d'Abancourt', 'La Mort d'Adam'),
+
 SELECT * FROM emprunt WHERE date_rendu IS NULL
 SELECT id_livre FROM emprunt WHERE date_rendu IS NULL
 
@@ -148,19 +153,34 @@ SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id
 
 Quels sont les titres des livres n'ayant pas été rendus à la bibliothèque ?
 1/ SELECT id_livre FROM emprunt WHERE date_rendu IS NULL
-2/ SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE date_rendu IS NULL)
+2/ SELECT titre, auteur FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE date_rendu IS NULL)
 Nous aimerions connaitre le n° (id) de(s) livre(s) que Chloé a emprunté à la bibliothèque
 1/ SELECT id_livre FROM emprunt WHERE id_abonne = 3
 2/ SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne = 3)
 
-afficher les prénoms des abonnés ayant emprunté un livre le 19/12/2014
+Afficher les prénoms des abonnés ayant emprunté un livre le 19/12/2014
 SELECT prenom FROM abonne WHERE id_abonne IN (SELECT id_abonne FROM emprunt WHERE date_sortie = '2014-12-19')
 
 ATTENTION le mot-clef IN permet de sortir (au contraire de =) plusieurs résultats
 
-afficher la liste des abonnés ayant déjà emprunté un livre d'alphonse daudet :
+Afficher la liste des abonnés ayant déjà emprunté un livre d'alphonse daudet :
 SELECT prenom FROM abonne WHERE id_abonne IN (SELECT id_abonne FROM emprunt WHERE id_livre IN (SELECT id_livre FROM livre WHERE auteur = 'Alphonse Daudet'))
+étape 3                                                étape 2                                      étape 1
 
-afficher les titres de livres que Chloé a emprunté à la bibliothèque : 
+Afficher les titres de livres que Chloé a emprunté à la bibliothèque : 
 SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne IN (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'))
 SELECT titre FROM livre WHERE id_livre IN (SELECT id_livre FROM emprunt WHERE id_abonne = (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'))
+étape 3                                                étape 2                                      étape 1
+
+Afficher les titres de livres que Chloé n'a pas encore emprunté à la bibliotheque :
+SELECT titre FROM livre WHERE id_livre NOT IN (SELECT id_livre FROM emprunt WHERE id_abonne = (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'))
+étape 3                                                étape 2                                      étape 1
+
+Afficher les titres de livres que Chloé n'a pas encore rendu à la bibliothèque :
+SELECT titre FROM livre WHERE id_livre IN(SELECT id_livre FROM emprunt WHERE date_rendu IS NULL AND id_abonne = (SELECT id_abonne FROM abonne WHERE prenom = 'Chloé'))
+
+Combien de livres Guillaume a-t-il emprunté à la bibliothèque ?
+1. SELECT id_abonne FROM abonne WHERE prenom = 'Guillaume'
+2. SELECT COUNT(*) AS 'nbr_livres' FROM emprunt WHERE id_abonne = (SELECT id_abonne FROM abonne WHERE prenom = 'Guillaume')
+
+LES JOINTURES :

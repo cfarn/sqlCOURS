@@ -1,0 +1,35 @@
+CREATE DATABASE IF NOT EXISTS exo_contacts ;
+USE exo_contacts ;
+
+CREATE TABLE t_contacts
+(
+    id_contact INT(3) NOT NULL AUTO_INCREMENT,
+    prenom VARCHAR(25) NOT NULL,
+    nom VARCHAR(25) NOT NULL,
+    email VARCHAR(25) NOT NULL,
+    mdp VARCHAR(15) NOT NULL,
+    adresse VARCHAR(255) NULL,
+    code_postal VARCHAR(10) NULL,
+    ville VARCHAR(30) NULL,
+    pays VARCHAR(25) NULL,
+    telephone VARCHAR(25) NOT NULL,
+    notes VARCHAR(255) NULL,
+    PRIMARY KEY (id_contact)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ;
+
+INSERT INTO t_contacts (id_contact, prenom, nom, email, mdp, adresse, code_postal, ville, pays, portable, notes) VALUES (NULL, 'Jean', 'Dujardin', '', '', '', '75016', 'Paris', 'France', '');
+
+INSERT INTO t_contacts (id_contact, prenom, nom, email, mdp, adresse, code_postal, ville, pays, telephone, notes) VALUES
+(NULL, 'Jean', 'Dujardin', 'jeandujardin@gmail.com', 'theartist', '3 rue des rosiers', '75016', 'Paris', 'France', '06.05.00.02.01','acteur'),
+(NULL, 'Leonardo', 'Dicaprio', 'ldicaprio@gmail.com', 'itsleo25', '5 hollywood street', '90210', 'Los Angeles', 'Etats-Unis', '255.256.258','acteur, producteur'),
+(NULL, 'Omar', 'Sy', 'omarsy@gmail.com', 'lesintouchables', '150 rue charonne', '75020', 'Paris', 'France', '06.43.25.00.10','acteur'),
+(NULL, 'Kad', 'Mérad',  'kadmerad@gmail.com', 'kad1500', ' 15 rue du vieux port', '13005', 'Marseille', 'France', '06.20.10.05.02','acteur'),
+(NULL, 'Vincent', 'Cassel', 'vcassel@gmail.com', 'casselactor50', '25 avenue de l'océan', '2B50', 'Calvi', 'France', '06.50.56.55.57','acteur'),
+(NULL, 'Leila', 'Bekhti', 'leila.b@gmail.com', 'leilaneuilly', '25 avenue jean jaurès', '92200', 'Neuilly-sur-seine', 'France', '06.15.10.35.30','actrice, réalisatrice'),
+(NULL, 'Sophie', 'Marceau', 'sophiemarceau@gmail.com', 'marceaulaboum', '', '75015', 'Paris', 'France', '','actrice, productrice'),
+(NULL, 'Charlotte', 'Gainsbourg','chgainsbourg@gmail.com', 'gainsbourg45nyc', '170th street', 'New-york', 'Etats-Unis', '','actrice, réalisatrice, productrice'),
+(NULL, 'Marion', 'Cotillard','marion.Cotillard@gmail.com', 'Auborddelamer01', '1 rue des pins', '33950', 'Lège-cap-ferret', 'France', '','actrice'),
+(NULL, 'Scarlet', 'Johanson','scarletjo@gmail.com', 'scarlet1984', 'w84th street', '10150', 'New-york', 'Etats-Unis', '265.203.510','actrice, réalisatrice, productrice');
+
+INSERT INTO t_contacts (id_contact, prenom, nom, email, mdp, adresse, code_postal, ville, pays, telephone, notes) VALUES
+(NULL, '', '', '', '', '', '', '', '', '',''),
